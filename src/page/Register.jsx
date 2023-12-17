@@ -1,17 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebookF } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
+import { auth, googleProvider } from "../config/firebase";
 
 const Register = () => {
-  const signup = async (email, password) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+  const navigate = useNavigate();
+
+  const signup = async (data) => {
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const user = auth.currentUser;
+      await updateProfile(user, {
+        displayName: `${data.firstName} ${data.lastName}`,
+      });
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  console.log(auth.currentUser.email);
+  async function handleGoogleAuth() {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -27,7 +48,9 @@ const Register = () => {
       email: Yup.string()
         .email("Invalid email address")
         .required("This field is required"),
-      password: Yup.string().required("This field is required"),
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters")
+        .required("This field is required"),
       confirmPassword: Yup.string()
         .required("This field is required")
         .oneOf(
@@ -36,10 +59,8 @@ const Register = () => {
         ),
     }),
     onSubmit: (values) => {
-      const newValues = { ...values };
-      delete newValues.confirmPassword;
-      console.log(JSON.stringify(newValues, null, 2));
-      signup(newValues.email, newValues.password);
+      signup(values);
+      navigate("/");
     },
   });
 
@@ -132,16 +153,18 @@ const Register = () => {
                 Sign Up
               </button>
             </form>
+
             <div className="text-center text-[13px]">Or sign up with</div>
             <div className="flex justify-center mt-4 mb-4">
-              <button className="mx-2 p-3 border border-gray-400 rounded-md text-lg">
+              <button
+                className="mx-2 p-3 border border-gray-400 rounded-md text-lg"
+                onClick={handleGoogleAuth}
+              >
                 <FcGoogle />
-              </button>
-              <button className="mx-2 p-3 border border-gray-400 rounded-md text-lg">
-                <FaFacebookF className="text-blue-600" />
               </button>
             </div>
           </div>
+
           <div>
             <div className="text-center text-[13px]">
               Already have an account?{" "}

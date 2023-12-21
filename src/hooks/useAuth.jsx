@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 
-const useAuth = () => {
+const UseAuth = () => {
   const [authUser, setAuthUser] = useState(null);
 
   useEffect(() => {
@@ -14,12 +14,14 @@ const useAuth = () => {
       }
     });
 
+    console.log(authUser);
+
     return () => {
       listen();
     };
   }, []);
 
-  return authUser;
+  return <div>xyz</div>;
 };
 
-export default useAuth;
+export default UseAuth;

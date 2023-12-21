@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IoNewspaper } from "react-icons/io5";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiHome } from "react-icons/ci";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { GrCatalog } from "react-icons/gr";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
+  const { totalCount } = useSelector((state) => state.cart);
   return (
     <div>
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40 h-full">
@@ -21,23 +24,43 @@ const SideBar = () => {
           </div>
           <div className="flex-1 overflow-auto py-2">
             <nav className="grid items-start px-4 text-sm font-medium">
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center gap-3 rounded-lg px-3 py-2 text-black  transition-all hover:text-black bg-gray-200"
+                    : "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black"
+                }
+                to={"/"}
               >
                 <CiHome />
                 Home
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-                href="#"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center gap-3 rounded-lg px-3 py-2 text-black  transition-all hover:text-black bg-gray-200"
+                    : "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black"
+                }
+                to={"/catalog"}
+              >
+                <GrCatalog />
+                Catalog
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center gap-3 rounded-lg px-3 py-2 text-black  transition-all hover:text-black bg-gray-200"
+                    : "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black"
+                }
+                to={"/cart"}
+                activeStyle={{ color: "red" }}
               >
                 <AiOutlineShoppingCart />
                 Orders
-                <span className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
+                <span className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-black text-white">
+                  {totalCount}
                 </span>
-              </Link>
+              </NavLink>
             </nav>
           </div>
         </div>

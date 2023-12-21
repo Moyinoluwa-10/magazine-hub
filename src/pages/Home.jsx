@@ -1,10 +1,15 @@
 import Catalog from "../components/Catalogue";
+import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 
 const Home = () => {
   return (
     <>
-      <div className="grid h-screen min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
+      <Header />
+      <div
+        className="grid lg:grid-cols-[280px_1fr] w-full overflow-hidden"
+        style={{ height: "calc(100vh - 60px)" }}
+      >
         <SideBar />
         <Catalog />
       </div>

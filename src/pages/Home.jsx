@@ -1,4 +1,4 @@
-import Catalog from "../components/Catalogue";
+import Catalog from "../components/CatalogList";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 

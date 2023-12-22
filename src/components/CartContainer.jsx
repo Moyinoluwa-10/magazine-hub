@@ -14,7 +14,7 @@ const CartContainer = () => {
   }, [items]);
 
   return (
-    <div className="p-4 overflow-scroll">
+    <section className="p-4 overflow-x-auto">
       <h1 className="text-3xl font-bold mb-10">Shopping Cart</h1>
 
       {items.length === 0 ? (
@@ -45,7 +45,7 @@ const CartContainer = () => {
           </footer>
         </>
       )}
-    </div>
+    </section>
   );
 };
 

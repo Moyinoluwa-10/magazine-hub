@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <header className="grid h-[60px] w-full overflow-hidden sm:grid-cols-[280px_1fr] border-b bg-gray-100/40 shadow-md">
       <div className="hidden sm:flex items-center px-6 border-r">
-        <Link className="flex items-center gap-2 font-semibold" href="#">
+        <Link className="flex items-center gap-2 font-semibold" to={"/"}>
           <IoNewspaper />
           <span className="">MagazineHub</span>
         </Link>

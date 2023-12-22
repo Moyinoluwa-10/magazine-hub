@@ -1,28 +1,54 @@
-// This is your test secret API key.
-const stripe = require("stripe")(
-  "sk_test_51NAMVlB7UN8U8sHYlRxmtHNX6viIETQqQg6SKHZ8IwrpsRyMq6cZTL4CPwDyaREt1e783b0lcwyJSJ6kAl8du0fE00XNOlSogN"
-);
+require("dotenv").config();
+
+const cors = require("cors");
 const express = require("express");
+const Stripe = require("stripe");
+
 const app = express();
+const stripe = Stripe(process.env.STRIPE_SECRET_TEST);
+
+app.use(cors());
 app.use(express.static("public"));
+app.use(express.json());
 
-const YOUR_DOMAIN = "http://localhost:5173";
+const DOMAIN = process.env.DOMAIN;
 
-app.post("/create-checkout-session", async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: "{{PRICE_ID}}",
-        quantity: 1,
-      },
-    ],
-    mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
-  });
-
-  res.redirect(303, session.url);
+app.get("/", (req, res) => {
+  return res.send("Welcome");
 });
 
-app.listen(4242, () => console.log("Running on port 4242"));
+app.post("/", (req, res) => {
+  res.send({ url: "xyz" });
+});
+
+app.post("/create-checkout-session", async (req, res) => {
+  const line_items = req.body.cartItems.map((item) => {
+    return {
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.title,
+          image: item.image,
+          description: item.description,
+          metadata: {
+            id: item.id,
+          },
+        },
+        unit_amount: item.price * 100,
+      },
+      quantity: item.amount,
+    };
+  });
+
+  const session = await stripe.checkout.sessions.create({
+    line_items,
+    mode: "payment",
+    success_url: `${DOMAIN}/checkout-success`,
+    cancel_url: `${DOMAIN}/cart`,
+  });
+
+  // res.redirect(303, session.url);
+  res.send({ url: session.url });
+});
+
+app.listen(4000, () => console.log("Running on port 4000"));

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCartTotal } from "../redux/feature/cartSlice";
+import { clearCart, getCartTotal } from "../redux/feature/cartSlice";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CartContainer = () => {
   const { items, totalAmount } = useSelector((state) => state.cart);
@@ -12,6 +13,19 @@ const CartContainer = () => {
     dispatch(getCartTotal());
     // eslint-disable-next-line
   }, [items]);
+
+  const handleCheckout = () => {
+    axios
+      .post(`http://localhost:4000/create-checkout-session`, {
+        cartItems: items,
+      })
+      .then((response) => {
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        }
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <section className="p-4 overflow-x-auto">
@@ -39,9 +53,22 @@ const CartContainer = () => {
             <h4 className="flex justify-between font-semibold text-lg mb-5">
               Total <span>${totalAmount}</span>
             </h4>
-            <button className="bg-black text-white py-2 px-5 rounded-md ml-auto block transition-all hover:bg-black/80">
-              Checkout
-            </button>
+
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-red-500 text-white py-2 px-5 rounded-md  block transition-all hover:bg-red-500/80"
+                onClick={() => dispatch(clearCart())}
+              >
+                Clear Cart
+              </button>
+
+              <button
+                className="bg-black text-white py-2 px-5 rounded-md  block transition-all hover:bg-black/80"
+                onClick={handleCheckout}
+              >
+                Checkout
+              </button>
+            </div>
           </footer>
         </>
       )}

@@ -1,5 +1,5 @@
-import CatalogList from "../components/CatalogList";
 import Header from "../components/Header";
+import Orders from "../components/Orders";
 import SideBar from "../components/SideBar";
 
 const Order = () => {
@@ -11,7 +11,7 @@ const Order = () => {
         style={{ height: "calc(100vh - 60px)" }}
       >
         <SideBar />
-        <CatalogList />
+        <Orders />
       </div>
     </>
   );

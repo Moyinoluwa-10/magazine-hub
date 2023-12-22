@@ -8,18 +8,26 @@ import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
 import Catalog from "./pages/Catalog";
 import Checkout from "./pages/Checkout";
+import Order from "./pages/Order";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
+import AuthenticatedRoutes from "./utils/AuthenticatedRoutes";
 
 function App() {
   return (
     <Routes>
       <Route path={"/"} element={<Home />} />
-      <Route path={"/signup"} element={<Register />} />
-      <Route path={"/login"} element={<Login />} />
-      <Route path={"/profile"} element={<Profile />} />
-      <Route path={"/dashboard"} element={<Dashboard />} />
-      <Route path={"/cart"} element={<Cart />} />
       <Route path={"/catalog"} element={<Catalog />} />
-      <Route path={"/checkout"} element={<Checkout />} />
+      <Route path={"/cart"} element={<Cart />} />
+      <Route element={<AuthenticatedRoutes />}>
+        <Route path={"/signup"} element={<Register />} />
+        <Route path={"/login"} element={<Login />} />
+      </Route>
+      <Route element={<ProtectedRoutes />}>
+        <Route path={"/profile"} element={<Profile />} />
+        <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route path={"/checkout"} element={<Checkout />} />
+        <Route path={"/orders"} element={<Order />} />
+      </Route>
     </Routes>
   );
 }

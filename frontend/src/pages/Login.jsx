@@ -1,23 +1,15 @@
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { auth, googleProvider } from "../config/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/feature/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { authValue } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    authValue && navigate("/catalog");
-    // eslint-disable-next-line
-  }, []);
 
   async function signIn(email, password) {
     try {

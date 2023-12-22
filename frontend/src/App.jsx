@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
 import Catalog from "./pages/Catalog";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path={"/dashboard"} element={<Dashboard />} />
       <Route path={"/cart"} element={<Cart />} />
       <Route path={"/catalog"} element={<Catalog />} />
+      <Route path={"/checkout"} element={<Checkout />} />
     </Routes>
   );
 }

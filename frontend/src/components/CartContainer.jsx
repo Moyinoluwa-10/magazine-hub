@@ -7,6 +7,7 @@ import axios from "axios";
 
 const CartContainer = () => {
   const { items, totalAmount } = useSelector((state) => state.cart);
+  const { authValue } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const CartContainer = () => {
     axios
       .post(`http://localhost:4000/create-checkout-session`, {
         cartItems: items,
+        userId: authValue.uid,
       })
       .then((response) => {
         if (response.data.url) {
@@ -62,12 +64,21 @@ const CartContainer = () => {
                 Clear Cart
               </button>
 
-              <button
-                className="bg-black text-white py-2 px-5 rounded-md  block transition-all hover:bg-black/80"
-                onClick={handleCheckout}
-              >
-                Checkout
-              </button>
+              {authValue ? (
+                <button
+                  className="bg-black text-white py-2 px-5 rounded-md  block transition-all hover:bg-black/80"
+                  onClick={handleCheckout}
+                >
+                  Checkout
+                </button>
+              ) : (
+                <Link
+                  to={"/login"}
+                  className="bg-black text-white py-2 px-5 rounded-md  block transition-all hover:bg-black/80"
+                >
+                  Log in to Checkout
+                </Link>
+              )}
             </div>
           </footer>
         </>

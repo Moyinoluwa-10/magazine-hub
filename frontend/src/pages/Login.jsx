@@ -58,9 +58,9 @@ const Login = () => {
   });
 
   return (
-    <section className="grid h-screen place-items-center bg-gray-200 p-5">
+    <section className="grid min-h-screen place-items-center bg-gray-200 px-5 py-10">
       <div className="max-w-md w-full p-6 bg-white rounded-md">
-        <h1 className="text-center font-semibold text-2xl mb-10">Sign Up</h1>
+        <h1 className="text-center font-semibold text-2xl mb-10">Log In</h1>
         <div>
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-4">
@@ -111,7 +111,7 @@ const Login = () => {
         </div>
 
         <div>
-          <div className="text-center text-sm">
+          <p className="text-center text-sm">
             Don't have an account?{" "}
             <Link
               to={"/signup"}
@@ -119,7 +119,7 @@ const Login = () => {
             >
               Sign Up
             </Link>
-          </div>
+          </p>
         </div>
       </div>
     </section>

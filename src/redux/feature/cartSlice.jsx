@@ -47,22 +47,21 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
+    fillCart: (state) => {
+      state.items = data;
+    },
     addToCart: (state, action) => {
-      const item = data.find((item) => item.id === action.payload);
-      const inCart = state.items.find((item) =>
-        item.id === action.payload.id ? true : false
-      );
-      state.items = [
-        ...state.items,
-        inCart
-          ? state.items.map((item) => {
-              if (item.id === action.payload) {
-                return { ...item, amount: item.amount + 1 };
-              }
-              return item;
-            })
-          : { ...item, amount: 1 },
-      ];
+      const inCart = state.items.find((item) => item.id === action.payload.id);
+      if (inCart) {
+        state.items = state.items.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, amount: item.amount + 1 };
+          }
+          return item;
+        });
+      } else {
+        state.items = [...state.items, { ...action.payload, amount: 1 }];
+      }
     },
   },
 });
@@ -73,6 +72,7 @@ export const {
   decrease,
   remove,
   clearCart,
+  fillCart,
   addToCart,
 } = cartSlice.actions;
 

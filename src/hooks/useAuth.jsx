@@ -14,7 +14,7 @@ const UseAuth = () => {
       }
     });
 
-    console.log(authUser);
+    // console.log(authUser);
 
     return () => {
       listen();

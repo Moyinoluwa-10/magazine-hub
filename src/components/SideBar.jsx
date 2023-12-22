@@ -41,7 +41,6 @@ const SideBar = () => {
                     : "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black"
                 }
                 to={"/cart"}
-                activeStyle={{ color: "red" }}
               >
                 <AiOutlineShoppingCart />
                 Orders

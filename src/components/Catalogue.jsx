@@ -5,14 +5,36 @@ import data from "../redux/data";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCartTotal } from "../redux/feature/cartSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { db } from "../config/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const Catalogue = () => {
+  const [magazineList, setMagazineList] = useState([]);
+
   const { items } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const moviesCollectionRef = collection(db, "magazines");
+
+  const getMagazineList = async () => {
+    try {
+      const data = await getDocs(moviesCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setMagazineList(filteredData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
+    getMagazineList();
     dispatch(getCartTotal());
   }, [items]);
+
+  // console.log(magazineList);
 
   return (
     <div className="flex flex-col overflow-auto">
@@ -50,6 +72,9 @@ const Catalogue = () => {
           {data.map((data) => {
             return <CatalogItem key={data.id} {...data} />;
           })}
+          {magazineList.map((data) => {
+            return <CatalogItem key={data.id} {...data} />;
+          })}
         </div>
 
         {/* <div className="mt-6 flex justify-center">
@@ -62,7 +87,7 @@ const Catalogue = () => {
   );
 };
 
-const CatalogItem = ({ id, title, description, img }) => {
+const CatalogItem = ({ id, title, description, img, price }) => {
   const dispatch = useDispatch();
   return (
     <div>
@@ -84,7 +109,9 @@ const CatalogItem = ({ id, title, description, img }) => {
         </div>
         <button
           className="border py-2 px-2 rounded-md hover:bg-gray-100 transition-all cursor-pointer"
-          onClick={() => dispatch(addToCart(id))}
+          onClick={() =>
+            dispatch(addToCart({ id, title, description, price, img }))
+          }
         >
           Add to Cart
         </button>
@@ -94,10 +121,11 @@ const CatalogItem = ({ id, title, description, img }) => {
 };
 
 CatalogItem.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,
   description: PropTypes.string,
   img: PropTypes.string,
+  price: PropTypes.number,
 };
 
 export default Catalogue;

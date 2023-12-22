@@ -6,6 +6,7 @@ import { decrease, increase, remove } from "../redux/feature/cartSlice";
 
 const CartItem = ({ id, img, title, price, amount }) => {
   const dispatch = useDispatch();
+
   return (
     <>
       <div className="flex items-center gap-4">

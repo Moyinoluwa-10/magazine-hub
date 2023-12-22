@@ -19,8 +19,9 @@ const CatalogItem = ({ id, title, description, img, price }) => {
           }}
           width="200"
         />
-        <div className="font-semibold">{title}</div>
-        <div className="text-gray-500">{description}</div>
+        <p className="font-semibold">{title}</p>
+        <p className="text-gray-500">{description}</p>
+        <p className="text-gray-800">Price - ${price}</p>
         <button
           className="border py-2 px-2 rounded-md hover:bg-gray-100 transition-all cursor-pointer"
           onClick={() =>

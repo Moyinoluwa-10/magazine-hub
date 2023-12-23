@@ -26,8 +26,8 @@ const createOrder = async (customer, data) => {
     userId: customer.metadata.userId,
     customerId: data.customer,
     products,
-    subtotal: data.amount_subtotal,
-    total: data.amount_total,
+    subtotal: data.amount_subtotal / 100,
+    total: data.amount_total / 100,
     payment_status: data.payment_status,
   });
 };

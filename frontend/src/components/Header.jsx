@@ -1,8 +1,8 @@
 import { IoNewspaper } from "react-icons/io5";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoMdNotificationsOutline, IoIosList } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaRegUser } from "react-icons/fa6";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/feature/authSlice";
@@ -49,17 +49,27 @@ const Header = () => {
             <div
               className={
                 isOpen
-                  ? "fixed right-6 top-12 p-5 bg-white border border-gray-400 rounded-md w-40 z-10 transition-all flex flex-col gap-1"
-                  : "fixed right-6 top-12 p-5 bg-white border border-gray-400 rounded-md w-40 z-10 transition-all hidden"
+                  ? "fixed right-6 top-12 px-5 py-8 bg-white border border-gray-400 rounded-md w-64 z-10 transition-all flex flex-col gap-2"
+                  : "fixed right-6 top-12 px-5 py-8 bg-white border border-gray-400 rounded-md w-64 z-10 transition-all hidden"
               }
             >
+              <Link to={"/profile"} className="flex gap-2 items-center">
+                <FaRegUser />
+                Your Profile
+              </Link>
+              <Link to={"/orders"} className="flex gap-2 items-center">
+                <IoIosList />
+                Your Orders
+              </Link>
+              <hr className="border-1" />
               <button
                 onClick={() => {
                   dispatch(logoutUser());
                   navigate("/");
                 }}
+                className="text-left"
               >
-                Sign Out
+                Sign out
               </button>
             </div>
           </>

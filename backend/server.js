@@ -109,7 +109,7 @@ app.post("/create-checkout-session", async (req, res) => {
     line_items,
     customer: customer.id,
     mode: "payment",
-    success_url: `${DOMAIN}/cart`,
+    success_url: `${DOMAIN}/checkout`,
     cancel_url: `${DOMAIN}/cart`,
   });
 

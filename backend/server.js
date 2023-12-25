@@ -11,63 +11,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_TEST);
 app.use(express.static("public"));
 app.use(cors());
 
-const createOrder = async (customer, data) => {
-  const orderRef = db.collection("orders");
-  const Items = JSON.parse(customer.metadata.cart);
-
-  const products = Items.map((item) => {
-    return {
-      productId: item.id,
-      quantity: item.amount,
-    };
-  });
-
-  await orderRef.add({
-    userId: customer.metadata.userId,
-    customerId: data.customer,
-    products,
-    subtotal: data.amount_subtotal / 100,
-    total: data.amount_total / 100,
-    payment_status: data.payment_status,
-  });
-};
-
-const endpointSecret = process.env.ENDPOINT_SECRET;
-app.post("/webhook", express.raw({ type: "application/json" }), (req, res) => {
-  const sig = req.headers["stripe-signature"];
-
-  let event, data, eventType;
-
-  try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-  } catch (err) {
-    console.log(`Webhook Error: ${err.message}`);
-    res.status(400).send(`Webhook Error: ${err.message}`);
-    return;
-  }
-
-  data = event.data.object;
-  eventType = event.type;
-
-  // Handle the checkout.session.completed event
-  if (eventType === "checkout.session.completed") {
-    stripe.customers
-      .retrieve(data.customer)
-      .then(async (customer) => {
-        try {
-          // create order
-          createOrder(customer, data);
-        } catch (err) {
-          console.log(err);
-        }
-      })
-      .catch((err) => console.log(err.message));
-  }
-
-  // Return a 200 response to acknowledge receipt of the event
-  res.send().end();
-});
-
+app.use("/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
 const DOMAIN = process.env.DOMAIN;
@@ -128,10 +72,17 @@ app.delete("/magazines/:id", async (req, res) => {
 });
 
 app.post("/create-checkout-session", async (req, res) => {
+  const products = req.body.cartItems.map((item) => {
+    return {
+      productId: item.id,
+      quantity: item.amount,
+    };
+  });
+
   const customer = await stripe.customers.create({
     metadata: {
       userId: req.body.userId,
-      cart: JSON.stringify(req.body.cartItems),
+      cart: JSON.stringify(products),
     },
   });
 
@@ -162,6 +113,63 @@ app.post("/create-checkout-session", async (req, res) => {
   });
 
   res.send({ url: session.url });
+});
+
+const createOrder = async (customer, data) => {
+  const orderRef = db.collection("orders");
+  const Items = JSON.parse(customer.metadata.cart);
+
+  const products = Items.map((item) => {
+    return {
+      productId: item.id,
+      quantity: item.amount,
+    };
+  });
+
+  await orderRef.add({
+    userId: customer.metadata.userId,
+    customerId: data.customer,
+    products,
+    subtotal: data.amount_subtotal / 100,
+    total: data.amount_total / 100,
+    payment_status: data.payment_status,
+  });
+};
+
+const endpointSecret = process.env.ENDPOINT_SECRET;
+app.post("/webhook", express.raw({ type: "application/json" }), (req, res) => {
+  const sig = req.headers["stripe-signature"];
+
+  let event, data, eventType;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    console.log(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  data = event.data.object;
+  eventType = event.type;
+
+  // Handle the checkout.session.completed event
+  if (eventType === "checkout.session.completed") {
+    stripe.customers
+      .retrieve(data.customer)
+      .then(async (customer) => {
+        try {
+          // create order
+          createOrder(customer, data);
+        } catch (err) {
+          console.log(err);
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  res.send().end();
 });
 
 app.listen(4000, () => console.log("Running on port 4000"));

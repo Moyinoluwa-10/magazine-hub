@@ -1,9 +1,19 @@
-// react
+// react & redux
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearCart, getCartTotal } from "../redux/feature/cartSlice";
 // icons
 import { IoCheckmarkOutline } from "react-icons/io5";
 
 const CheckoutContainer = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(clearCart());
+    dispatch(getCartTotal());
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <section className="grid min-h-screen place-items-center bg-gray-200 px-5 pt-20 py-40 overflow-y-auto">
       <div className="max-w-md w-full p-6 bg-white rounded-md">

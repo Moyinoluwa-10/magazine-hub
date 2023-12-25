@@ -8,7 +8,7 @@ const Cart = () => {
     <>
       <Header />
       <div
-        className="grid lg:grid-cols-[280px_1fr] w-full overflow-hidden"
+        className="grid md:grid-cols-[280px_1fr] w-full overflow-hidden"
         style={{ height: "calc(100vh - 60px)" }}
       >
         <SideBar />

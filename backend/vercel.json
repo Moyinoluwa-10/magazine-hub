@@ -3,14 +3,14 @@
     "name": "api-magazine-hub",
     "builds": [
         {
-            "src": "index.js",
+            "src": "server.js",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/index.js"
+            "dest": "/server.js"
         }
     ]
 }

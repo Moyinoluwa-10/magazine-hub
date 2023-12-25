@@ -20,7 +20,7 @@ const CartContainer = () => {
 
   const handleCheckout = () => {
     axios
-      .post(`http://localhost:4000/create-checkout-session`, {
+      .post(`https://api-magazine-hub.vercel.app/create-checkout-session`, {
         cartItems: items,
         userId: authValue.uid,
       })

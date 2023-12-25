@@ -15,6 +15,7 @@ app.use("/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
 const DOMAIN = process.env.DOMAIN;
+const PORT = process.env.PORT || 4000;
 
 app.get("/", (req, res) => {
   return res.send("Welcome");
@@ -172,4 +173,4 @@ app.post("/webhook", express.raw({ type: "application/json" }), (req, res) => {
   res.send().end();
 });
 
-app.listen(4000, () => console.log("Running on port 4000"));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

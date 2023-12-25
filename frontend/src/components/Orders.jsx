@@ -1,11 +1,14 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+// react & redux
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+// firebase
 import { db } from "../config/firebase";
-import PropTypes from "prop-types";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import OrderItem from "./OrderItem";
 
 const Orders = () => {
-  const [orderHistory, setOrderHistory] = useState([]);
+  const [orderHistory, setOrderHistory] = useState(null);
   const { authValue } = useSelector((state) => state.auth);
   const ordersCollectionRef = collection(db, "orders");
 
@@ -20,7 +23,9 @@ const Orders = () => {
         ...doc.data(),
         id: doc.id,
       }));
-      setOrderHistory(filteredData);
+      if (filteredData.length !== 0) {
+        setOrderHistory(filteredData);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -34,7 +39,7 @@ const Orders = () => {
   return (
     <section className="p-5">
       <h1 className="text-3xl font-bold mb-4">Order History</h1>
-      <div>
+      {orderHistory ? (
         <table className="w-full border text-left p-10">
           <thead>
             <tr className="bg-gray-300">
@@ -52,29 +57,19 @@ const Orders = () => {
               })}
           </tbody>
         </table>
-      </div>
+      ) : (
+        <>
+          <p className="mb-3">You don't have any order</p>
+          <Link
+            className="bg-black text-white py-2 px-5 rounded-md transition-all hover:bg-black/80"
+            to={"/cart"}
+          >
+            Order Now
+          </Link>
+        </>
+      )}
     </section>
   );
-};
-
-const OrderItem = ({ createdAt, status, total, products }) => {
-  return (
-    <tr>
-      <td className="p-2 border">{createdAt.seconds}</td>
-      <td className="p-2 border">
-        {products.map((product) => product.productId).join(",")}
-      </td>
-      <td className="p-2 border">{total}</td>
-      <td className="p-2 border">{status}</td>
-    </tr>
-  );
-};
-
-OrderItem.propTypes = {
-  createdAt: PropTypes.object,
-  status: PropTypes.string,
-  products: PropTypes.array,
-  total: PropTypes.number,
 };
 
 export default Orders;

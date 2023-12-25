@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/feature/authSlice";
 // icons
 import { IoNewspaper } from "react-icons/io5";
-import { IoMdNotificationsOutline, IoIosList } from "react-icons/io";
+import { IoIosList } from "react-icons/io";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaAngleDown, FaRegUser } from "react-icons/fa6";
 
@@ -26,10 +26,10 @@ const Header = () => {
           <IoNewspaper />
           <span className="">MagazineHub</span>
         </Link>
-        <button className="ml-auto h-8 w-8 border rounded-md flex justify-center items-center">
+        {/* <button className="ml-auto h-8 w-8 border rounded-md flex justify-center items-center">
           <IoMdNotificationsOutline />
           <span className="sr-only">Toggle notifications</span>
-        </button>
+        </button> */}
       </div>
 
       <div className="flex items-center gap-4 px-6">

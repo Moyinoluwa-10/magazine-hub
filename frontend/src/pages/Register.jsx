@@ -1,4 +1,5 @@
 // react & redux
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/feature/authSlice";
@@ -8,14 +9,17 @@ import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // firebase
-import { auth, googleProvider } from "../config/firebase";
+import { auth, db, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 const Register = () => {
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,16 +30,29 @@ const Register = () => {
       await updateProfile(user, {
         displayName: `${data.firstName} ${data.lastName}`,
       });
+      await setDoc(doc(db, "users", auth.currentUser.uid), {
+        location: "",
+        website: "",
+        createdAt: serverTimestamp(),
+      });
       dispatch(loginUser(auth.currentUser));
-      return;
+      navigate("/catalog");
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      if (error.code === "auth/email-already-in-use") {
+        setError("Email already in use");
+      }
     }
   }
 
   async function handleGoogleAuth() {
     try {
       await signInWithPopup(auth, googleProvider);
+      await setDoc(doc(db, "users", auth.currentUser.uid), {
+        location: "",
+        website: "",
+        createdAt: serverTimestamp(),
+      });
       dispatch(loginUser(auth.currentUser));
       navigate("/catalog");
     } catch (error) {
@@ -69,7 +86,6 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       signup(values);
-      navigate("/catalog");
     },
   });
 
@@ -147,6 +163,9 @@ const Register = () => {
                 <div className="text-[13px] text-red-500 mt-[2px]">
                   {formik.errors.confirmPassword}
                 </div>
+              ) : null}
+              {error ? (
+                <div className="text-[13px] text-red-500 mt-[2px]">{error}</div>
               ) : null}
             </div>
 

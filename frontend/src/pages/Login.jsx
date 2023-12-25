@@ -1,4 +1,5 @@
 // react & redux
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/feature/authSlice";
@@ -12,6 +13,8 @@ import { auth, googleProvider } from "../config/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,6 +25,9 @@ const Login = () => {
       navigate("/catalog");
     } catch (error) {
       console.log(error);
+      if (error.code === "auth/invalid-credential") {
+        setError("Email or password is invalid");
+      }
     }
   }
 
@@ -84,6 +90,9 @@ const Login = () => {
                 <div className="text-[13px] text-red-500 mt-[2px]">
                   {formik.errors.password}
                 </div>
+              ) : null}
+              {error ? (
+                <div className="text-[13px] text-red-500 mt-[2px]">{error}</div>
               ) : null}
             </div>
 

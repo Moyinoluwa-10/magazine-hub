@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { CiHome } from "react-icons/ci";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GrCatalog } from "react-icons/gr";
-// others
+// hamburger
 import { Spiral as Hamburger } from "hamburger-react";
 
 const SideBar = () => {
@@ -31,7 +31,7 @@ const SideBar = () => {
         className={
           isOpen
             ? "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block dark:bg-gray-800/40 h-full w-full overflow-hidden transition-all duration-500"
-            : "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block dark:bg-gray-800/40 h-full w-0 overflow-hidden transition-all duration-500"
+            : "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block dark:bg-gray-800/40 h-full w-0 md:w-full overflow-hidden transition-all duration-500"
         }
       >
         <div className="flex h-full max-h-screen flex-col gap-2 bg-white w-full max-w-[280px]">

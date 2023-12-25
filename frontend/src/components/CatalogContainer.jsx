@@ -57,17 +57,10 @@ const CatalogContainer = () => {
             />
           </div>
         </form>
-        <form className="flex">
-          <label htmlFor="sortBy">Sort By</label>
-          <select name="sortBy" id="sortBy">
-            <option value="name">Name</option>
-            <option value=""></option>
-          </select>
-        </form>
       </div>
 
       <main className="flex flex-col p-4 gap-4 ">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredMagazine.map((data) => {
             return <CatalogItem key={data.id} {...data} />;
           })}

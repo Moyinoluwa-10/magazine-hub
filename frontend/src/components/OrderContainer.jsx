@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 // firebase
 import { db } from "../config/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+// components
 import OrderItem from "./OrderItem";
 
-const Orders = () => {
+const OrderContainer = () => {
   const [orderHistory, setOrderHistory] = useState(null);
   const { authValue } = useSelector((state) => state.auth);
   const ordersCollectionRef = collection(db, "orders");
@@ -72,4 +73,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default OrderContainer;

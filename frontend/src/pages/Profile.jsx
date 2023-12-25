@@ -1,5 +1,6 @@
+// components
 import Header from "../components/Header";
-import ProfileBox from "../components/ProfileBox";
+import ProfileContainer from "../components/ProfileContainer";
 import SideBar from "../components/SideBar";
 
 const Profile = () => {
@@ -11,7 +12,7 @@ const Profile = () => {
         style={{ height: "calc(100vh - 60px)" }}
       >
         <SideBar />
-        <ProfileBox />
+        <ProfileContainer />
       </div>
     </>
   );

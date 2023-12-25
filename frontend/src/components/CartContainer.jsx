@@ -1,8 +1,11 @@
+// react & redux
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart, getCartTotal } from "../redux/feature/cartSlice";
+// components
 import CartItem from "./CartItem";
-import { Link } from "react-router-dom";
+// axios
 import axios from "axios";
 
 const CartContainer = () => {

@@ -1,12 +1,16 @@
-import { CiSearch } from "react-icons/ci";
+// react & redux
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../redux/feature/cartSlice";
-import { useEffect, useState } from "react";
+// icons
+import { CiSearch } from "react-icons/ci";
+// firebase
 import { db } from "../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
+// components
 import CatalogItem from "./CatalogItem";
 
-const CatalogList = () => {
+const CatalogContainer = () => {
   const [magazineList, setMagazineList] = useState([]);
   const [searchField, setSearchField] = useState("");
 
@@ -73,4 +77,4 @@ const CatalogList = () => {
   );
 };
 
-export default CatalogList;
+export default CatalogContainer;

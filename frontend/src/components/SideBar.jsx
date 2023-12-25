@@ -1,8 +1,10 @@
+// react & redux
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+//icons
 import { CiHome } from "react-icons/ci";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GrCatalog } from "react-icons/gr";
-import { useSelector } from "react-redux";
 
 const SideBar = () => {
   const { totalCount } = useSelector((state) => state.cart);

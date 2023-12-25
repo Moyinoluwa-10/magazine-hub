@@ -1,15 +1,19 @@
+// react & redux
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/feature/authSlice";
+// icons
 import { FcGoogle } from "react-icons/fc";
+//form
 import { useFormik } from "formik";
 import * as Yup from "yup";
+// firebase
 import { auth, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../redux/feature/authSlice";
 
 const Register = () => {
   const dispatch = useDispatch();

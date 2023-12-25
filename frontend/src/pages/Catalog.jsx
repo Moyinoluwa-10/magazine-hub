@@ -1,4 +1,5 @@
-import CatalogList from "../components/CatalogList";
+//components
+import CatalogContainer from "../components/CatalogContainer";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 
@@ -11,7 +12,7 @@ const Catalog = () => {
         style={{ height: "calc(100vh - 60px)" }}
       >
         <SideBar />
-        <CatalogList />
+        <CatalogContainer />
       </div>
     </>
   );

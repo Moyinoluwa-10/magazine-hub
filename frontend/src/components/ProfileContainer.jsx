@@ -2,24 +2,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/feature/authSlice";
-
 //icons
 import { AiOutlineMail } from "react-icons/ai";
 import { IoLocationOutline } from "react-icons/io5";
 import { HiOutlineLink } from "react-icons/hi";
 import { MdModeEditOutline } from "react-icons/md";
-
 // form
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 // firebase
 import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db, storage, auth } from "../config/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 
-const ProfileBox = () => {
+const ProfileContainer = () => {
   const { authValue } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -231,4 +228,4 @@ const ProfileBox = () => {
   );
 };
 
-export default ProfileBox;
+export default ProfileContainer;

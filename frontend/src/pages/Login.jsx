@@ -1,11 +1,15 @@
+// react & redux
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { auth, googleProvider } from "../config/firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/feature/authSlice";
+//icons
+import { FcGoogle } from "react-icons/fc";
+// forms
+import { useFormik } from "formik";
+import * as Yup from "yup";
+// firebase
+import { auth, googleProvider } from "../config/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,10 @@
-import { useDispatch } from "react-redux";
+// react & redux
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { decrease, increase, remove } from "../redux/feature/cartSlice";
+// icons
 import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
-import { decrease, increase, remove } from "../redux/feature/cartSlice";
 
 const CartItem = ({ id, img, title, price, amount }) => {
   const dispatch = useDispatch();

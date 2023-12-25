@@ -1,3 +1,4 @@
+// components
 import CartContainer from "../components/CartContainer";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";

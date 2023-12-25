@@ -1,11 +1,13 @@
-import { IoNewspaper } from "react-icons/io5";
-import { IoMdNotificationsOutline, IoIosList } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import { FaRegUserCircle } from "react-icons/fa";
-import { FaAngleDown, FaRegUser } from "react-icons/fa6";
+// react and redux
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/feature/authSlice";
+// icons
+import { IoNewspaper } from "react-icons/io5";
+import { IoMdNotificationsOutline, IoIosList } from "react-icons/io";
+import { FaRegUserCircle } from "react-icons/fa";
+import { FaAngleDown, FaRegUser } from "react-icons/fa6";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);

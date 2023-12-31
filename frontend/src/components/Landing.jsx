@@ -5,7 +5,7 @@ import { LuNewspaper } from "react-icons/lu";
 
 const Landing = () => {
   return (
-    <section className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+    <section className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:px-6 md:py-10 overflow-y-auto">
       <div className="grid md:grid-cols-2 gap-6">
         <div className="md:col-span-2 flex flex-col gap-6">
           <div>

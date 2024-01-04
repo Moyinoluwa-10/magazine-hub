@@ -15,7 +15,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="h-[60px] flex items-center px-6 gap-2 sm:hidden fixed z-10 top-0 left-0">
+      <div className="h-[60px] flex items-center px-6 gap-2 md:hidden fixed z-10 top-0 left-0">
         <Hamburger
           toggled={isOpen}
           size={20}
@@ -30,8 +30,8 @@ const SideBar = () => {
       <section
         className={
           isOpen
-            ? "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block dark:bg-gray-800/40 h-full w-full overflow-hidden transition-all duration-500"
-            : "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block dark:bg-gray-800/40 h-full w-0 md:w-full overflow-hidden transition-all duration-500"
+            ? "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block h-full w-full overflow-hidden transition-all duration-500"
+            : "z-10 fixed md:relative left-0 top-[60px] md:top-0 border-r md:bg-gray-100/40 bg-black/30 md:block h-full w-0 md:w-full overflow-hidden transition-all duration-500"
         }
       >
         <div className="flex h-full max-h-screen flex-col gap-2 bg-white w-full max-w-[280px]">

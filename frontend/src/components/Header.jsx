@@ -20,8 +20,8 @@ const Header = () => {
 
   const { authValue } = useSelector((state) => state.auth);
   return (
-    <header className="grid h-[60px] w-full overflow-hidden sm:grid-cols-[280px_1fr] border-b bg-gray-100 md:bg-gray-100/40 shadow-md fixed md:relative top-0 left-0">
-      <div className="hidden sm:flex items-center px-6 border-r">
+    <header className="grid h-[60px] w-full overflow-hidden md:grid-cols-[280px_1fr] border-b bg-gray-100 md:bg-gray-100/40 shadow-md fixed md:relative top-0 left-0">
+      <div className="hidden md:flex items-center px-6 border-r">
         <Link className="flex items-center gap-2 font-semibold" to={"/"}>
           <IoNewspaper />
           <span className="">MagazineHub</span>

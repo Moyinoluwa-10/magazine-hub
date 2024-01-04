@@ -21,7 +21,7 @@ const createOrder = async (cartItems, userId) => {
   return res.id;
 };
 
-const completeOrder = async (customer, data, id) => {
+const completeOrder = async (data, id) => {
   const orderRef = db.collection("orders").doc(id);
 
   await orderRef.update({

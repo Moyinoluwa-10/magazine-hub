@@ -5,15 +5,18 @@ const {
   ENDPOINT_SECRET,
   STRIPE_SECRET_TEST,
 } = require("../config/config");
+
 const stripe = Stripe(STRIPE_SECRET_TEST);
 
 const createCheckOutSession = async (req, res) => {
   let orderId;
+
   try {
     orderId = createOrder(req.body.cartItems, req.body.userId);
   } catch (err) {
     console.log(err);
   }
+
   const products = req.body.cartItems.map((item) => {
     return {
       productId: item.id,
@@ -57,7 +60,7 @@ const createCheckOutSession = async (req, res) => {
             currency: "usd",
           },
           display_name: "Free shipping",
-          // Delivers between 5-7 business days
+          // delivers between 5-7 business days
           delivery_estimate: {
             minimum: {
               unit: "business_day",
@@ -78,7 +81,7 @@ const createCheckOutSession = async (req, res) => {
             currency: "usd",
           },
           display_name: "Next day",
-          // Delivers in exactly 1 business day
+          // delivers in exactly 1 business day
           delivery_estimate: {
             minimum: {
               unit: "business_day",
@@ -118,8 +121,6 @@ const webhook = (req, res) => {
   const sig = req.headers["stripe-signature"];
 
   let event, data, eventType;
-  console.log("body", req.body);
-  console.log("sig", sig);
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, ENDPOINT_SECRET);
@@ -132,14 +133,13 @@ const webhook = (req, res) => {
   data = event.data.object;
   eventType = event.type;
 
-  // Handle the checkout.session.completed event
+  // handle the checkout.session.completed event
   if (eventType === "checkout.session.completed") {
     stripe.customers
       .retrieve(data.customer)
       .then(async (customer) => {
         try {
-          // create order
-          createOrder(customer, data);
+          completeOrder(customer, data);
         } catch (err) {
           console.log(err);
         }
@@ -147,7 +147,7 @@ const webhook = (req, res) => {
       .catch((err) => console.log(err.message));
   }
 
-  // Return a 200 response to acknowledge receipt of the event
+  // return a 200 response to acknowledge receipt of the event
   res.send().end();
 };
 

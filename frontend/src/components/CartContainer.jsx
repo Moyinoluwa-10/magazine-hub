@@ -20,7 +20,7 @@ const CartContainer = () => {
 
   const handleCheckout = () => {
     axios
-      .post(`http://localhost:4000/create-checkout-session`, {
+      .post(`${import.meta.env.VITE_BASE_URL}/stripe/create-checkout-session`, {
         cartItems: items,
         userId: authValue.uid,
       })

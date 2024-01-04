@@ -6,6 +6,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.static("public"));
+app.use("/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
 // routes

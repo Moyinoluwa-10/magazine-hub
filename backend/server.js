@@ -13,58 +13,14 @@ app.use(express.static("public"));
 app.use(cors());
 
 app.use(express.json());
+const magazineRouter = require("./routes/magazine.routes");
 
 const DOMAIN = process.env.DOMAIN;
 const PORT = process.env.PORT || 4000;
 const ENDPOINT_SECRET = process.env.ENDPOINT_SECRET;
-
+app.use("/magazines", magazineRouter);
 app.get("/", (req, res) => {
   return res.send("Welcome");
-});
-
-app.get("/magazines", async (req, res) => {
-  const magazineRef = db.collection("magazines");
-  const docs = await magazineRef.get();
-  const data = [];
-  const xyz = {
-    name: "Tunde",
-    age: 20,
-  };
-
-  docs.forEach((doc) => {
-    data.push({ ...doc.data(), id: doc.id });
-  });
-  res.json({ data });
-});
-
-app.get("/magazines/:id", async (req, res) => {
-  const { id } = req.params;
-  const magazineRef = db.collection("magazines").doc(id);
-  const doc = await magazineRef.get();
-  if (!doc.exists) {
-    return res.json({ msg: "No such document!" });
-  }
-  res.json({ data: { ...doc.data(), id } });
-});
-
-app.post("/magazines", async (req, res) => {
-  const magazineRef = db.collection("magazines");
-  await magazineRef.add(req.body);
-  res.send({ msg: "Magazine Added Successfully" });
-});
-
-app.patch("/magazines/:id", async (req, res) => {
-  const { id } = req.params;
-  const magazineRef = db.collection("magazines").doc(id);
-  const doc = await magazineRef.update(req.body);
-  res.send({ msg: "Magazine Updated Successfully" });
-});
-
-app.delete("/magazines/:id", async (req, res) => {
-  const { id } = req.params;
-  const magazineRef = db.collection("magazines").doc(id);
-  await magazineRef.delete();
-  res.send({ msg: "Magazine Deleted Successfully" });
 });
 
 app.post("/create-checkout-session", async (req, res) => {

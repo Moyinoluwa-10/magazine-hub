@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store.jsx";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { Toaster } from "react-hot-toast";
 
 let persistor = persistStore(store);
 
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <App />
+          <Toaster />
         </BrowserRouter>
       </PersistGate>
     </Provider>

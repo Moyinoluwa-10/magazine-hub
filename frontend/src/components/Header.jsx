@@ -51,8 +51,8 @@ const Header = () => {
             <div
               className={
                 isOpen
-                  ? "fixed right-6 top-12 px-5 py-8 bg-white border border-gray-400 rounded-md w-64 z-10 transition-all flex flex-col gap-2"
-                  : "fixed right-6 top-12 px-5 py-8 bg-white border border-gray-400 rounded-md w-64 z-10 transition-all hidden"
+                  ? "fixed right-6 top-12 px-5 py-8 bg-white border border-gray-400 rounded-md w-64 z-50 transition-all flex flex-col gap-2"
+                  : "fixed right-6 top-12 px-5 py-8 bg-white border border-gray-400 rounded-md w-64 z-50 transition-all hidden"
               }
             >
               <Link to={"/profile"} className="flex gap-2 items-center">

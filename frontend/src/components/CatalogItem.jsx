@@ -2,6 +2,8 @@
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/feature/cartSlice";
+// toast
+import toast from "react-hot-toast";
 
 const CatalogItem = ({ id, title, description, img, price }) => {
   const dispatch = useDispatch();
@@ -25,9 +27,12 @@ const CatalogItem = ({ id, title, description, img, price }) => {
         <p className="text-gray-800">Price - ${price}</p>
         <button
           className="border py-2 px-2 rounded-md hover:bg-gray-100 transition-all cursor-pointer"
-          onClick={() =>
-            dispatch(addToCart({ id, title, description, price, img }))
-          }
+          onClick={() => {
+            dispatch(addToCart({ id, title, description, price, img }));
+            toast.success("Item added to cart", {
+              position: "top-right",
+            });
+          }}
         >
           Add to Cart
         </button>

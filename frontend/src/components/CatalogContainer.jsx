@@ -45,10 +45,10 @@ const CatalogContainer = () => {
     <section className="flex flex-col overflow-auto">
       <div className="flex items-center px-6 mt-7 mb-5">
         <form className="w-full">
-          <div className="relative">
-            <CiSearch className="absolute left-2.5 top-[50%] -translate-y-[50%] text-gray-500 dark:text-gray-400 text-lg " />
+          <div className="relative -z-10">
+            <CiSearch className="absolute z-0 left-2.5 top-[50%] -translate-y-[50%] text-gray-500 dark:text-gray-400 text-lg " />
             <input
-              className="w-full bg-white shadow-none appearance-none pl-8 pr-2 md:w-2/3 lg:w-1/3 dark:bg-gray-950 border border-gray-300 py-[6px] rounded-md outline-none"
+              className="w-full bg-white shadow-none appearance-none pl-8 pr-2 md:w-2/3 lg:w-1/3 border border-gray-300 py-[6px] rounded-md outline-none"
               placeholder="Search"
               type="search"
               name="searchField"

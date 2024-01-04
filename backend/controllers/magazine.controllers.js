@@ -1,5 +1,5 @@
 const { FieldValue } = require("firebase-admin/firestore");
-const { db } = require("../firebase");
+const { db } = require("../config/firebase");
 const magazinesRef = db.collection("magazines");
 
 const getAllMagazines = async (req, res) => {

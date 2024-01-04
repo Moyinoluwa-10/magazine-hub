@@ -1,23 +1,23 @@
-require("dotenv").config();
-
-const cors = require("cors");
 const express = require("express");
+const cors = require("cors");
 const Stripe = require("stripe");
-const { db } = require("./firebase");
+const { db } = require("./config/firebase");
 const { FieldValue } = require("firebase-admin/firestore");
+const {
+  DOMAIN,
+  PORT,
+  ENDPOINT_SECRET,
+  STRIPE_SECRET_TEST,
+} = require("./config/config");
 
 const app = express();
-const stripe = Stripe(process.env.STRIPE_SECRET_TEST);
+const stripe = Stripe(STRIPE_SECRET_TEST);
 
 app.use(express.static("public"));
 app.use(cors());
 
 app.use(express.json());
 const magazineRouter = require("./routes/magazine.routes");
-
-const DOMAIN = process.env.DOMAIN;
-const PORT = process.env.PORT || 4000;
-const ENDPOINT_SECRET = process.env.ENDPOINT_SECRET;
 app.use("/magazines", magazineRouter);
 app.get("/", (req, res) => {
   return res.send("Welcome");

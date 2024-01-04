@@ -17,7 +17,8 @@ const OrderContainer = () => {
     try {
       const q = query(
         ordersCollectionRef,
-        where("userId", "==", authValue.uid)
+        where("userId", "==", authValue.uid),
+        where("payment_status", "==", "paid")
       );
       const data = await getDocs(q);
       const filteredData = data.docs.map((doc) => ({
@@ -37,11 +38,18 @@ const OrderContainer = () => {
     // eslint-disable-next-line
   }, []);
 
+  console.log(orderHistory);
+  // console.log(
+  //   orderHistory.map((order) => {
+  //     console.log(order.createdAt.toDate().toDateString());
+  //   })
+  // );
+
   return (
-    <section className="p-5">
+    <section className="p-5 overflow-auto">
       <h1 className="text-3xl font-bold mb-4">Order History</h1>
       {orderHistory ? (
-        <table className="w-full border text-left p-10">
+        <table className="w-full border text-left p-10 overflow-scroll">
           <thead>
             <tr className="bg-gray-300">
               <th className="p-2 border">Date</th>

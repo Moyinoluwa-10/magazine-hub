@@ -127,6 +127,11 @@ const webhook = (req, res) => {
   eventType = event.type;
 
   // handle the checkout.session.completed event
+
+  if (eventType === "checkout.session.expired") {
+    console.log("Hello");
+  }
+
   if (eventType === "checkout.session.completed") {
     stripe.customers
       .retrieve(data.customer)

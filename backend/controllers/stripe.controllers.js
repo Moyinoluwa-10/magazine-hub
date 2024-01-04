@@ -12,22 +12,15 @@ const createCheckOutSession = async (req, res) => {
   let orderId;
 
   try {
-    orderId = createOrder(req.body.cartItems, req.body.userId);
+    orderId = await createOrder(req.body.cartItems, req.body.userId);
   } catch (err) {
     console.log(err);
   }
 
-  const products = req.body.cartItems.map((item) => {
-    return {
-      productId: item.id,
-      quantity: item.amount,
-    };
-  });
-
   const customer = await stripe.customers.create({
     metadata: {
       userId: req.body.userId,
-      cart: JSON.stringify(products),
+      orderId: orderId,
     },
   });
 

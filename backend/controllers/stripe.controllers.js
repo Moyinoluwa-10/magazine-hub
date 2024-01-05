@@ -112,6 +112,7 @@ const createCheckOutSession = async (req, res) => {
 
 const webhook = (req, res) => {
   const sig = req.headers["stripe-signature"];
+  console.log(req.originalUrl);
 
   let event, data, eventType;
   console.log(req.body);

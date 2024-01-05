@@ -20,10 +20,13 @@ const CartContainer = () => {
 
   const handleCheckout = () => {
     axios
-      .post(`${import.meta.env.VITE_BASE_URL}/stripe/create-checkout-session`, {
-        cartItems: items,
-        userId: authValue.uid,
-      })
+      .post(
+        `https://api-magazine-hub.vercel.app/stripe/create-checkout-session`,
+        {
+          cartItems: items,
+          userId: authValue.uid,
+        }
+      )
       .then((response) => {
         if (response.data.url) {
           window.location.href = response.data.url;

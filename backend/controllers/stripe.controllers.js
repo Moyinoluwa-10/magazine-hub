@@ -11,11 +11,11 @@ const stripe = Stripe(STRIPE_SECRET_TEST);
 const createCheckOutSession = async (req, res) => {
   let orderId;
 
-  try {
-    orderId = await createOrder(req.body.cartItems, req.body.userId);
-  } catch (err) {
-    console.log(err);
-  }
+  // try {
+  //   orderId = await createOrder(req.body.cartItems, req.body.userId);
+  // } catch (err) {
+  //   console.log(err);
+  // }
 
   const customer = await stripe.customers.create({
     metadata: {
@@ -115,9 +115,10 @@ const webhook = (req, res) => {
   console.log(req.originalUrl);
 
   let event, data, eventType;
-  console.log(req.body);
-  console.log(sig);
-  console.log(ENDPOINT_SECRET);
+  // console.log(req.body);
+  // console.log(sig);
+  // console.log(ENDPOINT_SECRET);
+  console.log(req.hostname);
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, ENDPOINT_SECRET);

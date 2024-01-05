@@ -117,8 +117,8 @@ const webhook = (req, res) => {
   let event, data, eventType;
   // console.log(req.body);
   // console.log(sig);
-  // console.log(ENDPOINT_SECRET);
-  console.log(req.hostname);
+  console.log(ENDPOINT_SECRET);
+  console.log(req.headers["host"]);
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, ENDPOINT_SECRET);

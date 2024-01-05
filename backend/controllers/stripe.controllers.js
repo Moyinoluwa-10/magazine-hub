@@ -115,6 +115,7 @@ const webhook = (req, res) => {
 
   let event, data, eventType;
   console.log(req.body);
+  console.log(sig);
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, ENDPOINT_SECRET);

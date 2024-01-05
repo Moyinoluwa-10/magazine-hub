@@ -25,11 +25,13 @@ const createCheckOutSession = async (req, res) => {
   });
 
   const line_items = req.body.cartItems.map((item) => {
+    console.log(item.id);
     return {
       price_data: {
         currency: "usd",
         product_data: {
           name: item.title,
+          description: item.description,
           metadata: {
             id: item.id,
           },
@@ -112,7 +114,6 @@ const createCheckOutSession = async (req, res) => {
 
 const webhook = (req, res) => {
   const sig = req.headers["stripe-signature"];
-  console.log(req.originalUrl);
 
   let event, data, eventType;
 
@@ -134,6 +135,8 @@ const webhook = (req, res) => {
       .retrieve(data.customer)
       .then(async (customer) => {
         try {
+          // console.log(customer);
+          // console.log(data);
           completeOrder(customer, data);
         } catch (err) {
           console.log(err);

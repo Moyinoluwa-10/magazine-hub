@@ -8,13 +8,6 @@ app.use(cors());
 app.use(express.static("public"));
 app.use("/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
-// app.use((req, res, next) => {
-//   if (req.originalUrl === "/stripe/webhook") {
-//     next(); // Do nothing with the body because I need it in a raw state.
-//   } else {
-//     express.json()(req, res, next); // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
-//   }
-// });
 
 // routes
 const magazineRouter = require("./routes/magazine.routes");
